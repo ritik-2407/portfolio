@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
+import { Code2, Database, Loader2, Server } from "lucide-react";
 import {
   FormEvent,
   useCallback,
@@ -11,15 +13,21 @@ import {
   type SVGProps,
 } from "react";
 
-type SectionId = "about" | "projects" | "contact";
+type SectionId = "about" | "projects" | "skills" | "contact";
 
 type Project = {
   name: string;
-  badge: string;
-  summary: string;
-  stack: string[];
-  github: string;
-  demo: string;
+  description: string;
+  tags: string[];
+  status: "Completed" | "Building" | "Planning";
+  link: string;
+  highlight?: string;
+};
+
+type SkillCategory = {
+  title: string;
+  icon: ReactNode;
+  skills: string[];
 };
 
 type SocialLink = {
@@ -28,24 +36,75 @@ type SocialLink = {
   icon: (props: SVGProps<SVGSVGElement>) => ReactNode;
 };
 
+const skills: SkillCategory[] = [
+  {
+    title: "Systems & Infrastructure",
+    icon: <Server className="h-5 w-5" />,
+    skills: [
+      "Distributed Systems (Raft, Paxos)",
+      "Network Protocols (TCP/UDP, HTTP/2)",
+      "Performance Optimization",
+      "Concurrency (Goroutines, Channels)",
+      "CI/CD Pipelines",
+      "ZFS / Btrfs (File Systems)",
+      "Docker & Containerization"
+    ],
+  },
+  {
+    title: "Languages & Runtime",
+    icon: <Code2 className="h-5 w-5" />,
+    skills: [
+      "Go (Golang)",
+      "TypeScript / JavaScript",
+      "Next.js (App Router) & React",
+      "Node.js",
+      "Python",
+      "SQL",
+      "C/C++ (Basic)",
+    ],
+  },
+  {
+    title: "Core Tech & Tools",
+    icon: <Database className="h-5 w-5" />,
+    skills: [
+      "PostgreSQL (Internals)",
+      "Prisma ORM",
+      "tRPC",
+      "Tailwind CSS",
+      "Express.js",
+      "AWS & Cloud Services",
+      "Redis"
+    ],
+  },
+];
+
 const projects: Project[] = [
   {
     name: "VelocityCache",
-    badge: "Infra",
-    summary:
-      "Remote build caching for polyglot monorepos. Fingerprints every build graph and ships cache artefacts across teams without rewriting the toolchain.",
-    stack: ["Go", "Next.js", "S3/R2", "TypeScript", "CLI"],
-    github: "https://github.com/bit2swaz/velocity-cache",
-    demo: "https://velocity-cache.vercel.app",
+    description:
+      "A stateless, self-hosted remote build cache for monorepos. Decouples caching logic from storage to ensure data sovereignty.",
+    tags: ["Go", "Docker", "S3/MinIO", "Systems Design"],
+    status: "Completed",
+    link: "https://github.com/bit2swaz/velocity-cache",
+    highlight: "231x faster than Turborepo",
   },
   {
-    name: "DataForge",
-    badge: "Data Engg",
-    summary:
-      "Python CLI for reproducible CSV cleaning pipelines. Analysts can define, save, and rerun multi-step transformations backed by Pandas, NumPy, and MySQL.",
-    stack: ["Python", "Pandas", "NumPy", "MySQL", "CLI"],
-    github: "https://github.com/bit2swaz/dataforge-python",
-    demo: "#",
+    name: "CrisisMesh",
+    description:
+      "Offline-first emergency communication network. Devices form a self-organizing mesh using WiFi-Direct/BLE to route messages without internet.",
+    tags: ["Go", "Mesh Networking", "Gossip Protocol", "SQLite"],
+    status: "Completed",
+    link: "https://github.com/bit2swaz/crisismesh",
+    highlight: "Built in 4 hours",
+  },
+  {
+    name: "Prism",
+    description:
+      "An ephemeral database proxy that intercepts PostgreSQL wire protocol to instantly fork databases for every feature branch using filesystem-level Copy-on-Write.",
+    tags: ["Go", "Postgres Wire Protocol", "ZFS", "Docker SDK"],
+    status: "Building",
+    link: "https://github.com/bit2swaz/prism",
+    highlight: "Database branching in <500ms",
   },
 ];
 
@@ -62,7 +121,7 @@ const socialLinks: SocialLink[] = [
   },
   {
     name: "LinkedIn",
-    href: "https://www.linkedin.com/in/aditya-mishra-b82a61362",
+    href: "https://www.linkedin.com/in/bit2swaz",
     icon: LinkedInIcon,
   },
   {
@@ -121,6 +180,11 @@ function RevealSection({ id, className, children }: RevealSectionProps) {
 }
 
 export default function Home() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [result, setResult] = useState<string | null>(null);
+  const [showEmailToast, setShowEmailToast] = useState(false);
+  const ACCESS_KEY = "1dfdacfa-5d1d-42bd-a831-b7d43243dac2";
+
   const handleScrollTo = useCallback((section: SectionId) => {
     const target = document.getElementById(section);
 
@@ -130,15 +194,55 @@ export default function Home() {
     }
   }, []);
 
-  const handleContactSubmit = useCallback((event: FormEvent<HTMLFormElement>) => {
+  const handleContactSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const form = event.currentTarget;
+    setIsSubmitting(true);
+    setResult(null);
+
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify(Object.fromEntries(formData)),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setResult("Message sent successfully!");
+        form.reset();
+      } else {
+        setResult(data.message || "Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      console.error(error);
+      setResult("Failed to send message. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleCopyEmail = useCallback((email: string) => {
+    navigator.clipboard.writeText(email);
+    setShowEmailToast(true);
+    setTimeout(() => setShowEmailToast(false), 3000);
   }, []);
 
   const ctaClasses =
-    "inline-flex items-center justify-center gap-2 rounded-full border border-border/50 px-8 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.34em] transition duration-300 hover:-translate-y-1 hover:border-border/70";
+    "inline-flex items-center justify-center gap-2 rounded-full border border-border/50 px-8 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.34em] transition duration-300 ease-in-out hover:-translate-y-1 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] active:scale-95";
+
+  const socialLinkClasses =
+    "group flex h-12 w-12 items-center justify-center rounded-full border border-border/40 bg-card/70 text-foreground/70 transition duration-300 ease-in-out hover:scale-110 hover:border-blue-500/50 hover:text-blue-400 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)]";
 
   return (
     <div className="relative isolate">
+      <div className="fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-blue-900/20 via-background to-background opacity-40" />
       <div className="mx-auto flex max-w-6xl flex-col gap-12 px-4 pb-12 pt-14 sm:px-6 lg:px-8">
         <RevealSection
           id="about"
@@ -190,57 +294,114 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid w-full max-w-4xl grid-cols-1 gap-6 justify-items-center sm:grid-cols-2">
-            {projects.map((project) => (
+          <div className="flex w-full max-w-5xl flex-wrap justify-center gap-6">
+            {projects.map((project) => {
+              const statusColor =
+                project.status === "Completed"
+                  ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-500"
+                  : project.status === "Building"
+                    ? "border-blue-500/20 bg-blue-500/10 text-blue-500"
+                    : "border-zinc-500/20 bg-zinc-500/10 text-zinc-500";
+
+              return (
+                <motion.div
+                  key={project.name}
+                  className="group flex w-full max-w-xs flex-col rounded-3xl border border-border/40 bg-card/70 p-6 text-left shadow-soft backdrop-blur-2xl transition duration-300 ease-in-out hover:-translate-y-1 hover:border-blue-500/50 hover:bg-card/80 hover:shadow-[0_20px_80px_rgba(0,0,0,0.3)] hover:shadow-[inset_0_0_20px_rgba(59,130,246,0.05)]"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true, amount: 0.4 }}
+                  transition={{ duration: 0.5, ease: "easeOut" }}
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <h3 className="text-lg font-semibold tracking-tight text-foreground">
+                      {project.name}
+                    </h3>
+                    <span
+                      className={`rounded-full border px-2 py-0.5 text-[0.5rem] font-bold uppercase tracking-wider ${statusColor}`}
+                    >
+                      {project.status}
+                    </span>
+                  </div>
+
+                  {project.highlight && (
+                    <div className="mt-3 text-xs font-medium text-foreground/90">
+                      <span className="mr-1 text-emerald-500">★</span>
+                      {project.highlight}
+                    </div>
+                  )}
+
+                  <p className="mt-3 text-pretty text-sm leading-relaxed text-foreground/75">
+                    {project.description}
+                  </p>
+                  <div className="mt-5 flex flex-wrap justify-center gap-2">
+                    {project.tags.map((tech) => (
+                      <span
+                        key={tech}
+                        className="rounded-full border border-border/40 bg-canvas/40 px-3 py-1 text-[0.6rem] font-medium uppercase tracking-[0.28em] text-foreground/70 transition duration-300 ease-in-out hover:bg-blue-500/10 hover:border-blue-500/30 hover:text-blue-400 group-hover:border-border/60 group-hover:text-foreground"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="mt-5 flex items-center justify-center gap-3">
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex h-10 w-10 items-center justify-center rounded-full border border-border/40 text-foreground/75 transition duration-200 ease-in-out hover:scale-105 hover:border-blue-500/50 hover:text-blue-400 hover:shadow-[0_0_15px_rgba(59,130,246,0.2)]"
+                      aria-label={`${project.name} on GitHub`}
+                    >
+                      <GitHubIcon className="h-5 w-5" />
+                    </a>
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
+        </RevealSection>
+
+        <RevealSection
+          id="skills"
+          className="flex min-h-[40vh] flex-col items-center justify-center gap-8 py-14 text-center"
+        >
+          <div className="flex max-w-2xl flex-col items-center gap-3">
+            <span className="text-[0.7rem] font-medium uppercase tracking-[0.42em] text-foreground/50">
+              Technical Arsenal
+            </span>
+            <h2 className="text-balance text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
+              Skills & Technologies
+            </h2>
+          </div>
+
+          <div className="grid w-full max-w-5xl grid-cols-1 gap-6 sm:grid-cols-3">
+            {skills.map((category, index) => (
               <motion.div
-                key={project.name}
-                className="group flex w-full max-w-xs flex-col rounded-3xl border border-border/40 bg-card/70 p-6 text-left shadow-soft backdrop-blur-2xl transition duration-300 hover:-translate-y-2 hover:border-border/60 hover:bg-card/80 hover:shadow-[0_28px_100px_rgba(0,0,0,0.4)]"
+                key={category.title}
+                className="flex flex-col rounded-3xl border border-border/40 bg-card/50 p-6 text-left shadow-soft backdrop-blur-2xl transition duration-300 ease-in-out hover:-translate-y-1 hover:border-blue-500/50 hover:bg-card/70 hover:shadow-[inset_0_0_20px_rgba(59,130,246,0.05)]"
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 viewport={{ once: true, amount: 0.4 }}
                 transition={{ duration: 0.5, ease: "easeOut" }}
               >
-                <div className="flex items-start justify-between gap-3">
-                  <h3 className="text-lg font-semibold tracking-tight text-foreground">
-                    {project.name}
+                <div className="mb-4 flex items-center gap-3 text-foreground/80">
+                  <div className="rounded-lg bg-foreground/10 p-2 text-foreground">
+                    {category.icon}
+                  </div>
+                  <h3 className="text-sm font-semibold uppercase tracking-wider">
+                    {category.title}
                   </h3>
-                  <span className="rounded-full border border-border/30 bg-canvas/40 px-3 py-1 text-[0.58rem] font-semibold uppercase tracking-[0.32em] text-foreground/55 transition group-hover:border-border/50 group-hover:text-foreground/80">
-                    {project.badge}
-                  </span>
                 </div>
-                <p className="mt-3 text-pretty text-sm leading-relaxed text-foreground/75">
-                  {project.summary}
-                </p>
-                <div className="mt-5 flex flex-wrap justify-center gap-2">
-                  {project.stack.map((tech) => (
-                    <span
-                      key={tech}
-                      className="rounded-full border border-border/40 bg-canvas/40 px-3 py-1 text-[0.6rem] font-medium uppercase tracking-[0.28em] text-foreground/70 transition group-hover:border-border/60 group-hover:text-foreground"
+                <ul className="flex flex-col gap-3">
+                  {category.skills.map((skill) => (
+                    <li
+                      key={skill}
+                      className="flex items-center gap-2 text-sm text-foreground/70"
                     >
-                      {tech}
-                    </span>
+                      <div className="h-1.5 w-1.5 rounded-full bg-emerald-500/50" />
+                      {skill}
+                    </li>
                   ))}
-                </div>
-                <div className="mt-5 flex items-center justify-center gap-3">
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-border/40 text-foreground/75 transition hover:border-border/60 hover:text-foreground"
-                    aria-label={`${project.name} on GitHub`}
-                  >
-                    <GitHubIcon className="h-5 w-5" />
-                  </a>
-                  <a
-                    href={project.demo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-border/40 text-foreground/75 transition hover:border-border/60 hover:text-foreground"
-                    aria-label={`${project.name} live`}
-                  >
-                    <ExternalLinkIcon className="h-5 w-5" />
-                  </a>
-                </div>
+                </ul>
               </motion.div>
             ))}
           </div>
@@ -266,6 +427,7 @@ export default function Home() {
             onSubmit={handleContactSubmit}
             className="w-full max-w-3xl rounded-3xl border border-border/30 bg-card/60 p-8 shadow-soft backdrop-blur-2xl"
           >
+            <input type="hidden" name="access_key" value={ACCESS_KEY} />
             <div className="grid gap-6 md:grid-cols-2">
               <label className="flex flex-col gap-2 text-left text-sm font-semibold uppercase tracking-[0.32em] text-foreground/60">
                 Name
@@ -298,32 +460,73 @@ export default function Home() {
                 />
               </label>
             </div>
-            <div className="mt-8 flex justify-end">
+            <div className="mt-8 flex flex-col items-end gap-4">
               <button
                 type="submit"
-                className="inline-flex items-center justify-center gap-2 rounded-full border border-border/50 bg-foreground px-8 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.34em] text-canvas shadow-[0_24px_80px_rgba(0,0,0,0.45)] transition hover:-translate-y-1 hover:shadow-[0_32px_120px_rgba(0,0,0,0.55)]"
+                disabled={isSubmitting}
+                className="inline-flex items-center justify-center gap-2 rounded-full border border-border/50 bg-foreground px-8 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.34em] text-canvas shadow-[0_24px_80px_rgba(0,0,0,0.45)] transition duration-300 ease-in-out hover:-translate-y-1 hover:border-blue-500/50 hover:shadow-[0_0_20px_rgba(59,130,246,0.15)] active:scale-95 disabled:cursor-not-allowed disabled:opacity-70"
               >
-                Send Message
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  "Send Message"
+                )}
               </button>
+              {result && (
+                <p className={`text-sm ${result.includes("success") ? "text-emerald-500" : "text-red-500"}`}>
+                  {result}
+                </p>
+              )}
             </div>
           </form>
 
           <div className="flex flex-wrap justify-center gap-3 pb-4">
-            {socialLinks.map(({ name, href, icon: Icon }) => (
-              <a
-                key={name}
-                href={href}
-                target={name === "Email" ? undefined : "_blank"}
-                rel={name === "Email" ? undefined : "noopener noreferrer"}
-                className="group flex h-12 w-12 items-center justify-center rounded-full border border-border/40 bg-card/70 text-foreground/70 transition hover:border-border/60 hover:text-foreground"
-                aria-label={name}
-              >
-                <Icon className="h-5 w-5" />
-              </a>
-            ))}
+            {socialLinks.map(({ name, href, icon: Icon }) => {
+              if (name === "Email") {
+                return (
+                  <button
+                    key={name}
+                    type="button"
+                    onClick={() => handleCopyEmail(href.replace("mailto:", ""))}
+                    className={socialLinkClasses}
+                    aria-label="Copy email to clipboard"
+                  >
+                    <Icon className="h-5 w-5" />
+                  </button>
+                );
+              }
+              return (
+                <a
+                  key={name}
+                  href={href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={socialLinkClasses}
+                  aria-label={name}
+                >
+                  <Icon className="h-5 w-5" />
+                </a>
+              );
+            })}
           </div>
         </RevealSection>
       </div>
+
+      <AnimatePresence>
+        {showEmailToast && (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            className="fixed bottom-8 left-1/2 z-50 -translate-x-1/2 rounded-full border border-border/50 bg-card/90 px-6 py-3 text-sm text-foreground shadow-lg backdrop-blur-xl"
+          >
+            Email address copied to clipboard
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -360,11 +563,4 @@ function MailIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-function ExternalLinkIcon(props: SVGProps<SVGSVGElement>) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden focusable="false" {...props}>
-      <path d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14z" />
-      <path d="M5 5h6V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6h-2v6H5z" />
-    </svg>
-  );
-}
+
