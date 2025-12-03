@@ -80,6 +80,15 @@ const skills: SkillCategory[] = [
 
 const projects: Project[] = [
   {
+    name: "Prism",
+    description:
+      "An ephemeral database proxy that intercepts PostgreSQL wire protocol to instantly fork databases for every feature branch using filesystem-level Copy-on-Write.",
+    tags: ["Go", "Postgres Wire Protocol", "ZFS", "Docker SDK"],
+    status: "Completed",
+    link: "https://github.com/bit2swaz/prism",
+    highlight: "Database branching in <500ms",
+  },
+  {
     name: "VelocityCache",
     description:
       "A stateless, self-hosted remote build cache for monorepos. Decouples caching logic from storage to ensure data sovereignty.",
@@ -97,15 +106,7 @@ const projects: Project[] = [
     link: "https://github.com/bit2swaz/crisismesh",
     highlight: "Built in 4 hours",
   },
-  {
-    name: "Prism",
-    description:
-      "An ephemeral database proxy that intercepts PostgreSQL wire protocol to instantly fork databases for every feature branch using filesystem-level Copy-on-Write.",
-    tags: ["Go", "Postgres Wire Protocol", "ZFS", "Docker SDK"],
-    status: "Building",
-    link: "https://github.com/bit2swaz/prism",
-    highlight: "Database branching in <500ms",
-  },
+
 ];
 
 const socialLinks: SocialLink[] = [
