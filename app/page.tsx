@@ -80,6 +80,15 @@ const skills: SkillCategory[] = [
 
 const projects: Project[] = [
   {
+  name: "Orion",
+  description:
+    "A distributed container orchestrator built from scratch. Collapses the control plane into a single binary using Raft for consensus and Lifeguard-enhanced gossip for failure detection.",
+  tags: ["Go", "Raft Consensus", "SWIM Gossip", "Docker SDK"],
+  status: "Completed",
+  link: "https://github.com/bit2swaz/orion",
+  highlight: "Self-healing cluster in <2s",
+  },
+  {
     name: "Prism",
     description:
       "An ephemeral database proxy that intercepts PostgreSQL wire protocol to instantly fork databases for every feature branch using filesystem-level Copy-on-Write.",
@@ -251,13 +260,13 @@ export default function Home() {
         >
           <div className="flex max-w-3xl flex-col items-center gap-6">
             <span className="text-[0.7rem] font-medium uppercase tracking-[0.42em] text-foreground/50">
-              Backend & Product Dev
+              Backend & Systems Dev
             </span>
             <h1 className="text-balance text-4xl font-semibold tracking-tight text-foreground sm:text-5xl md:text-6xl">
               Wassup, I&apos;m Aditya. I build tools that make devs faster.
             </h1>
             <p className="text-pretty text-lg leading-relaxed text-foreground/80 sm:text-xl">
-              I&apos;m a backend & product developer in love with speed, DX, and performance. I love building infra/devtools that blend technical depth with minimalist but clean designs.
+              I&apos;m a backend & systems developer in love with speed, DX, and performance. I love building infra/devtools that blend technical depth with minimalist but clean designs.
             </p>
             <div className="relative mt-12 flex w-full flex-col gap-4 sm:w-auto sm:flex-row">
               <span className="pointer-events-none absolute inset-x-4 top-1/2 h-32 -translate-y-1/2 rounded-full bg-foreground/10 blur-3xl sm:inset-x-6" aria-hidden />
