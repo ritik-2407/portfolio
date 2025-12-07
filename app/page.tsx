@@ -109,11 +109,11 @@ const projects: Project[] = [
   {
     name: "CrisisMesh",
     description:
-      "Offline-first emergency communication network. Devices form a self-organizing mesh using WiFi-Direct/BLE to route messages without internet.",
-    tags: ["Go", "Mesh Networking", "Gossip Protocol", "SQLite"],
+      "An offline-first, decentralized mesh network for disaster zones. Features a Dual-Interface (Terminal for Command, Web for Civilians), End-to-End Encryption, and an automated 'Panic Protocol' for SOS routing.",
+    tags: ["Go", "Mesh Networking", "TUI (BubbleTea)", "NaCl Crypto"],
     status: "Completed",
     link: "https://github.com/bit2swaz/crisismesh",
-    highlight: "Built in 4 hours",
+    highlight: "Offline 'Panic Protocol' & Encryption",
   },
 
 ];
