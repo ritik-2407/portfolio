@@ -30,8 +30,8 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "bit2swaz - portfolio",
-  description: "The workbench, experiments, blogs and projects crafted by bit2swaz.",
+  title: "Ritik - portfolio",
+  description: "The place to know me better.",
 };
 
 export default function RootLayout({
