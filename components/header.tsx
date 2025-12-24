@@ -36,22 +36,35 @@ export function Header() {
     hydrateSections();
     window.addEventListener("resize", hydrateSections);
     window.addEventListener("hashchange", hydrateSections);
-    
-    // Optional: Add scroll listener to update active tab
+
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 100;
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
+      const pageBottom =
+        window.innerHeight + window.scrollY >= document.body.offsetHeight - 2;
+
       for (const item of NAV_ITEMS) {
         if (item.external) continue;
-        const id = item.href.slice(1);
-        const element = document.getElementById(id);
-        if (element) {
-          const { offsetTop, offsetHeight } = element;
-          if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-            setActiveTab(item.label);
-          }
+
+        const el = document.getElementById(item.href.slice(1));
+        if (!el) continue;
+
+        const { offsetTop, offsetHeight } = el;
+
+        if (pageBottom && item.label === "Contact") {
+          setActiveTab("Contact");
+          return;
+        }
+
+        if (
+          scrollPosition >= offsetTop &&
+          scrollPosition < offsetTop + offsetHeight
+        ) {
+          setActiveTab(item.label);
+          return;
         }
       }
     };
+
     window.addEventListener("scroll", handleScroll);
 
     return () => {
@@ -62,7 +75,12 @@ export function Header() {
   }, []);
 
   const handleNavClick = useCallback(
-    (event: MouseEvent<HTMLAnchorElement>, href: string, external: boolean, label: string) => {
+    (
+      event: MouseEvent<HTMLAnchorElement>,
+      href: string,
+      external: boolean,
+      label: string
+    ) => {
       if (external || !href.startsWith("#")) return;
 
       event.preventDefault();
@@ -77,20 +95,17 @@ export function Header() {
         window.history.replaceState(null, "", href);
       }
     },
-    [],
+    []
   );
 
   return (
-    <motion.header 
+    <motion.header
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, type: "spring", bounce: 0.3 }}
       className="fixed top-6 left-0 right-0 z-50 flex justify-center px-4"
     >
       <div className="relative flex items-center gap-2 rounded-full border border-white/10 bg-[#0F0F11]/80 p-2 shadow-2xl backdrop-blur-xl transition-all hover:bg-[#0F0F11]/90">
-        
-        
-
         {/* --- Desktop Nav --- */}
         <nav className="hidden items-center gap-1 sm:flex">
           {NAV_ITEMS.map(({ label, href, external }) => {
@@ -101,7 +116,9 @@ export function Header() {
                 href={href}
                 target={external ? "_blank" : undefined}
                 rel={external ? "noopener noreferrer" : undefined}
-                onClick={(event) => handleNavClick(event, href, external, label)}
+                onClick={(event) =>
+                  handleNavClick(event, href, external, label)
+                }
                 onMouseEnter={() => setActiveTab(label)}
                 className="relative px-4 py-2 text-sm font-medium text-zinc-400 transition-colors hover:text-white"
               >
@@ -121,23 +138,20 @@ export function Header() {
 
         {/* --- Mobile Nav (Simplified) --- */}
         <nav className="flex items-center gap-1 sm:hidden">
-            {/* On mobile, usually show less or use a dropdown. 
+          {/* On mobile, usually show less or use a dropdown. 
                 For this aesthetic, we keep it clean and maybe just show 'Contact' or 'Projects' 
                 if space is tight, but here we'll just render them compactly */}
-             {NAV_ITEMS.slice(0, 2).map(({ label, href, external }) => (
-                <Link
-                  key={label}
-                  href={href}
-                  onClick={(event) => handleNavClick(event, href, external, label)}
-                  className="rounded-full px-3 py-2 text-xs font-medium text-zinc-400 active:bg-white/10 active:text-white"
-                >
-                  {label}
-                </Link>
-             ))}
+          {NAV_ITEMS.slice(0, 2).map(({ label, href, external }) => (
+            <Link
+              key={label}
+              href={href}
+              onClick={(event) => handleNavClick(event, href, external, label)}
+              className="rounded-full px-3 py-2 text-xs font-medium text-zinc-400 active:bg-white/10 active:text-white"
+            >
+              {label}
+            </Link>
+          ))}
         </nav>
-
-        
-
       </div>
     </motion.header>
   );
