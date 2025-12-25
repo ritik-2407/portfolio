@@ -9,6 +9,7 @@ import {
   useTransform,
 } from "framer-motion";
 import {
+  Star,
   ArrowUpRight,
   Code2,
   Database,
@@ -147,6 +148,12 @@ const socialLinks: SocialLink[] = [
     name: "LinkedIn",
     href: "https://www.linkedin.com/in/ritik-yadav-06a8aa361/",
     icon: LinkedInIcon,
+  },
+  // Added LeetCode here
+  {
+    name: "LeetCode",
+    href: "https://leetcode.com/u/ritik_247/",
+    icon: LeetCodeIcon,
   },
   { name: "Email", href: "ritikyadav2426@gmail.com", icon: MailIcon },
 ];
@@ -371,7 +378,8 @@ export default function Home() {
               Full-Stack developer with a focus on{" "}
               <span className="text-zinc-200">Product Design</span> and
               providing seamless <span className="text-zinc-200">UI/UX</span>. I
-              build tools that serve a purpose in day to day life. I am currently a third year CS grad based in INDIA
+              build tools that serve a purpose in day to day life. I am
+              currently a third year CS grad based in INDIA
             </p>
 
             <div className="mt-8 flex gap-4">
@@ -526,6 +534,61 @@ export default function Home() {
                 </div>
               </BentoCard>
             ))}
+          </div>
+
+          {/* --- REPLACE THE PREVIOUS ACTIVITY STATS DIV WITH THIS --- */}
+          {/* Grid Layout: 2 Columns on medium screens, 1 on mobile */}
+          <div className="grid gap-4 sm:grid-cols-2">
+            {/* 1. Github Chart (Full Width: sm:col-span-2) */}
+            <BentoCard delay={0.3} className="sm:col-span-2">
+              <div className="flex flex-col gap-4">
+                <h3 className="text-sm font-medium uppercase tracking-wider text-zinc-400">
+                  Github Contributions
+                </h3>
+                <div className="w-full overflow-hidden rounded-xl bg-white/5 p-4">
+                  <img src="https://ghchart.rshah.org/AF3787/ritik-2407" alt="Ritik's Github Chart" className="w-full h-auto filter invert contrast-125"/>
+                </div>
+              </div>
+            </BentoCard>
+
+            {/* 2. LeetCode Stats (Half Width) */}
+            <BentoCard delay={0.4}>
+              <div className="flex h-full flex-col gap-4">
+                <h3 className="text-sm font-medium uppercase tracking-wider text-zinc-400">
+                  LeetCode Stats
+                </h3>
+                {/* Removed extra padding/sizing so it fills the card nicely */}
+                <div className="flex flex-1 items-center justify-center overflow-hidden rounded-xl bg-white/0 ">
+                  <img
+                    src="https://leetcard.jacoblin.cool/ritik_247?theme=dark&font=Inter"
+                    alt="Ritik's LeetCode stats"
+                    className="w-full border-2 border-white/20 rounded-2xl object-contain opacity-90 hover:opacity-100 transition-opacity"
+                  />
+                </div>
+              </div>
+            </BentoCard>
+
+            {/* 3. Top Languages (Half Width) - Fills the empty spot */}
+            <BentoCard delay={0.4}>
+              <div className="flex h-full flex-col gap-4">
+                <h3 className="text-sm font-medium uppercase tracking-wider text-zinc-400">
+                  TOP Languages
+                </h3>
+                <div className="flex flex-1 items-center justify-center overflow-hidden rounded-xl bg-white/5 p-4">
+                  {/* Try the official GitHub Stats API */}
+                  <img
+                    src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=ritik-2407&layout=compact&hide_border=true&title_color=50C878&text_color=a1a1aa&bg_color=ffffff00&langs_count=8"
+                    alt="Top Languages"
+                    className="w-full max-w-md object-contain opacity-90 hover:opacity-100 transition-opacity"
+                    onError={(e) => {
+                      // Fallback to another instance
+                      e.currentTarget.src =
+                        "https://github-readme-stats.vercel.app/api/top-langs/?username=ritik-2407&layout=compact&hide_border=true&title_color=10b981&text_color=a1a1aa";
+                    }}
+                  />
+                </div>
+              </div>
+            </BentoCard>
           </div>
         </section>
 
@@ -702,3 +765,19 @@ function MailIcon(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
+
+function LeetCodeIcon(props: SVGProps<SVGSVGElement>) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="currentColor"
+      aria-hidden
+      focusable="false"
+      {...props}
+    >
+      <path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 0 0-.207-1.943l-3.5-2.831c-1.803-1.458-4.965-1.258-6.52.405l-1.636 1.751 4.706-5.04c.534-.572.534-1.498 0-2.07A1.374 1.374 0 0 0 13.483 0m-2.296 4.673a1.376 1.376 0 0 0-.401.993c.003.771.642 1.4 1.408 1.405h7.456c.77-.003 1.396-.636 1.393-1.405a1.376 1.376 0 0 0-1.393-1.396h-7.456a1.376 1.376 0 0 0-1.007.403m-7.229 6.845a1.375 1.375 0 0 0-.964.441 1.376 1.376 0 0 0 0 1.936l1.379 1.353a1.374 1.374 0 0 0 1.948 0 1.376 1.376 0 0 0 0-1.936L4.942 11.96a1.374 1.374 0 0 0-.986-.442" />
+    </svg>
+  );
+}
+
+
