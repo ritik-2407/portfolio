@@ -97,13 +97,14 @@ const skills: SkillCategory[] = [
     icon: <WrenchIcon className="h-5 w-5" />,
     skills: [
       "Recoil & Redux",
-      "Prisma ORM & Drizzle",
+      "Prisma ORM",
+      "Drizzle",
       "Axios",
       "Zod",
       "NextAuth",
       "Lucide React",
       "Framer Motion",
-      "BASH Terminal",
+      "BASH",
     ],
   },
 ];
@@ -355,7 +356,7 @@ export default function Home() {
               </div>
 
               <span className="rounded-full border border-white/5 bg-white/5 px-4 py-1.5 text-xs font-medium text-emerald-300 backdrop-blur-md">
-                Available for work
+                Open for Work
               </span>
             </div>
 
@@ -370,11 +371,11 @@ export default function Home() {
               Full-Stack developer with a focus on{" "}
               <span className="text-zinc-200">Product Design</span> and
               providing seamless <span className="text-zinc-200">UI/UX</span>. I
-              build tools that serve a purpose in day to day life.
+              build tools that serve a purpose in day to day life. I am currently a third year CS grad based in INDIA
             </p>
 
             <div className="mt-8 flex gap-4">
-              <MagneticButton className="group flex items-center gap-2 rounded-full bg-white px-8 py-4 font-medium text-black transition-transform active:scale-95">
+              <MagneticButton className=" hover:cursor-pointer group flex items-center gap-2 rounded-full bg-white px-8 py-4 font-medium text-black transition-transform active:scale-95">
                 <span
                   onClick={() =>
                     document
@@ -386,7 +387,7 @@ export default function Home() {
                 </span>
                 <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
               </MagneticButton>
-              <MagneticButton className="rounded-full border border-white/10 bg-white/5 px-8 py-4 font-medium text-white backdrop-blur-md transition-colors hover:bg-white/10 active:scale-95">
+              <MagneticButton className="hover:cursor-pointer rounded-full border border-white/10 bg-white/5 px-8 py-4 font-medium text-white backdrop-blur-md transition-colors hover:bg-white/10 active:scale-95">
                 <span
                   onClick={() =>
                     document
@@ -510,10 +511,10 @@ export default function Home() {
                 <div className="mb-6 inline-flex h-10 w-10 items-center justify-center rounded-full bg-purple-500/10 text-purple-400">
                   {category.icon}
                 </div>
-                <h3 className="mb-4 text-sm font-medium uppercase tracking-wider text-zinc-400">
+                <h3 className="mb-6 text-sm font-medium uppercase tracking-wider text-zinc-400">
                   {category.title}
                 </h3>
-                <div className="flex flex-wrap gap-2">
+                <div className="flex flex-wrap gap-2 ">
                   {category.skills.map((skill) => (
                     <span
                       key={skill}
