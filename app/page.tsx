@@ -143,6 +143,11 @@ const DefaultIcon = Code2;
 
 const socialLinks: SocialLink[] = [
   { name: "GitHub", href: "https://github.com/ritik-2407", icon: GitHubIcon },
+  {
+    name: "LeetCode",
+    href: "https://leetcode.com/u/ritik_247/",
+    icon: LeetCodeIcon,
+  },
   { name: "X", href: "https://x.com/ritik_247", icon: XIcon },
   {
     name: "LinkedIn",
@@ -150,11 +155,7 @@ const socialLinks: SocialLink[] = [
     icon: LinkedInIcon,
   },
   // Added LeetCode here
-  {
-    name: "LeetCode",
-    href: "https://leetcode.com/u/ritik_247/",
-    icon: LeetCodeIcon,
-  },
+  
   { name: "Email", href: "ritikyadav2426@gmail.com", icon: MailIcon },
 ];
 
@@ -378,8 +379,7 @@ export default function Home() {
               Full-Stack developer with a focus on{" "}
               <span className="text-zinc-200">Product Design</span> and
               providing seamless <span className="text-zinc-200">UI/UX</span>. I
-              build tools that serve a purpose in day to day life. I am
-              currently a third year CS grad based in INDIA
+              build tools that serve a purpose in day to day life. <br></br> <br></br>Currently a third year CS grad from INDIA stepping into tech and development.
             </p>
 
             <div className="mt-8 flex gap-4">
