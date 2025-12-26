@@ -11,6 +11,8 @@ import {
 import {
   Star,
   ArrowUpRight,
+  ExternalLinkIcon,
+  CpuIcon,
   Code2,
   Database,
   DnaIcon,
@@ -47,9 +49,10 @@ type Project = {
   name: string;
   description: string;
   tags: string[];
-  status: "Completed" | "Building" | "Planning" | "v-01" | "v-02";
+  status: "Completed" | "Building" | "Planning" | "v-01" | "v-02" | "LIVE";
   link: string;
   post: string;
+  live: string;
   highlight?: string;
 };
 
@@ -116,10 +119,11 @@ const projects: Project[] = [
     description:
       "It is an AI powered analysis engine which scrapes your Github profile to give genuine outputs like suggestions, analysis, roast etc. without sounding too generic and robotic.",
     tags: ["Next", "NextAuth", "Github API", "GROQ LLM"],
-    status: "v-01",
+    status: "v-02",
     link: "https://github.com/ritik-2407/DEV-DNA",
     highlight: "AI powered Github Analyzer",
     post: "https://x.com/ritik_247/status/2003502226493546667?s=20",
+    live: "https://dev-dna-chi.vercel.app/",
   },
   {
     name: "MOMENTUM",
@@ -130,6 +134,7 @@ const projects: Project[] = [
     link: "https://github.com/ritik-2407/MOMENTUM",
     highlight: "Not your typical productivity partner",
     post: "https://x.com/ritik_247/status/1995159815526756555?s=20",
+    live: "",
   },
 ];
 
@@ -155,7 +160,7 @@ const socialLinks: SocialLink[] = [
     icon: LinkedInIcon,
   },
   // Added LeetCode here
-  
+
   { name: "Email", href: "ritikyadav2426@gmail.com", icon: MailIcon },
 ];
 
@@ -379,33 +384,34 @@ export default function Home() {
               Full-Stack developer with a focus on{" "}
               <span className="text-zinc-200">Product Design</span> and
               providing seamless <span className="text-zinc-200">UI/UX</span>. I
-              build tools that serve a purpose in day to day life. <br></br> <br></br>Currently a third year CS grad from INDIA stepping into tech and development.
+              build tools that serve a purpose in day to day life. <br></br>{" "}
+              <br></br>Currently a third year CS grad from INDIA stepping into
+              tech and development.
             </p>
 
             <div className="mt-8 flex gap-4">
-              <MagneticButton className=" hover:cursor-pointer group flex items-center gap-2 rounded-full bg-white px-8 py-4 font-medium text-black transition-transform active:scale-95">
-                <span
-                  onClick={() =>
-                    document
-                      .getElementById("projects")
-                      ?.scrollIntoView({ behavior: "smooth" })
-                  }
-                >
-                  View Work
-                </span>
-                <ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-              </MagneticButton>
-              <MagneticButton className="hover:cursor-pointer rounded-full border border-white/10 bg-white/5 px-8 py-4 font-medium text-white backdrop-blur-md transition-colors hover:bg-white/10 active:scale-95">
-                <span
-                  onClick={() =>
-                    document
-                      .getElementById("contact")
-                      ?.scrollIntoView({ behavior: "smooth" })
-                  }
-                >
-                  Contact
-                </span>
-              </MagneticButton>
+              <button
+                onClick={() =>
+                  document
+                    .getElementById("projects")
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
+                className="group flex cursor-pointer items-center gap-2 rounded-full bg-white px-8 py-4 font-medium text-black transition-all duration-300 ease-in-out hover:scale-105 active:scale-95"
+              >
+                View Work
+                <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />
+              </button>
+
+              <button
+                onClick={() =>
+                  document
+                    .getElementById("contact")
+                    ?.scrollIntoView({ behavior: "smooth" })
+                }
+                className="cursor-pointer rounded-full border border-white/10 bg-white/5 px-8 py-4 font-medium text-white backdrop-blur-md transition-all duration-300 ease-in-out hover:scale-105 hover:bg-white/10 active:scale-95"
+              >
+                Contact
+              </button>
             </div>
           </motion.div>
         </section>
@@ -423,8 +429,6 @@ export default function Home() {
 
           <div className="grid gap-6">
             {projects.map((project, i) => {
-              // 2. RETRIEVE THE SPECIFIC ICON
-              // We look up the icon based on the project name.
               const Icon =
                 iconMap[project.name as keyof typeof iconMap] || DefaultIcon;
 
@@ -434,7 +438,6 @@ export default function Home() {
                     <div className="flex-1 space-y-4">
                       <div className="flex items-center gap-3">
                         <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/5">
-                          {/* 3. RENDER THE ICON */}
                           <Icon className="h-6 w-6 text-zinc-400 transition-colors group-hover:text-zinc-100" />
                         </div>
                         <div>
@@ -444,7 +447,8 @@ export default function Home() {
                           <div className="flex items-center gap-2 text-xs font-medium tracking-wide text-zinc-500">
                             <span
                               className={`h-1.5 w-1.5 rounded-full ${
-                                project.status === "Completed"
+                                project.status === "v-02" ||
+                                project.status === "LIVE"
                                   ? "bg-green-400"
                                   : "bg-amber-300"
                               }`}
@@ -454,7 +458,7 @@ export default function Home() {
                         </div>
                       </div>
 
-                      <p className="max-w-lg text-pretty text-zinc-400">
+                      <p className="cursor-default max-w-lg text-pretty text-zinc-400">
                         {project.description}
                       </p>
 
@@ -462,7 +466,7 @@ export default function Home() {
                         {project.tags.map((tag) => (
                           <span
                             key={tag}
-                            className="rounded-full border border-white/5 bg-white/2 px-3 py-1 text-xs font-medium text-zinc-400"
+                            className="cursor-default rounded-full border border-white/5 bg-white/2 px-3 py-1 text-xs font-medium text-zinc-400"
                           >
                             {tag}
                           </span>
@@ -470,28 +474,47 @@ export default function Home() {
                       </div>
                     </div>
 
+                    {/* --- LINKS SECTION --- */}
                     <div className="flex items-center gap-3 shrink-0">
-                      {/* Project/Github Link */}
+                      {/* 1. Github Link */}
                       <a
                         href={project.link}
                         target="_blank"
+                        rel="noopener noreferrer"
                         aria-label="View Project"
-                        className="flex h-12 w-12 items-center justify-center rounded-full  bg-zinc-800 text-black transition-transform duration-300 hover:scale-110 focus:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
+                        className="flex h-12 w-12 items-center justify-center rounded-full bg-zinc-800 text-black transition-transform duration-300 hover:scale-110 focus:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
                       >
                         <GitHubIcon className="h-5 w-5" />
                       </a>
 
-                      {/* X (Twitter) Post Link */}
+                      {/* 2. X (Twitter) Link */}
                       {project.post && (
                         <a
                           href={project.post}
                           target="_blank"
+                          rel="noopener noreferrer"
                           aria-label="View Post on X"
                           className="flex h-12 w-12 items-center justify-center rounded-full bg-zinc-800 text-white transition-transform duration-300 hover:scale-110 focus:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
                         >
                           <XIcon className="h-5 w-5 fill-current" />
                         </a>
                       )}
+
+                      {/* 3. NEW: Live Visit Link */}
+                      <a
+                        href={project.live || undefined} // Removes href if empty, preventing navigation
+                        target={project.live ? "_blank" : undefined}
+                        rel={project.live ? "noopener noreferrer" : undefined}
+                        aria-label="Visit Live App"
+                        onClick={(e) => !project.live && e.preventDefault()} // Safety check
+                        className={`flex h-12 w-12 items-center justify-center rounded-full bg-zinc-800 transition-all duration-300 ${
+                          project.live
+                            ? "text-white hover:scale-110 focus:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
+                            : "text-zinc-600 cursor-not-allowed opacity-50" // Greyed out styles
+                        }`}
+                      >
+                        <ExternalLinkIcon className="h-5 w-5" />
+                      </a>
                     </div>
                   </div>
                 </BentoCard>
@@ -526,7 +549,7 @@ export default function Home() {
                   {category.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="rounded-lg bg-zinc-900 px-3 py-1.5 text-sm text-zinc-300 transition-colors hover:bg-zinc-800 hover:text-white"
+                      className="rounded-lg bg-zinc-900 px-3 py-1.5 text-sm text-zinc-300 transition-colors hover:bg-zinc-800 hover:text-white cursor-default"
                     >
                       {skill}
                     </span>
@@ -546,7 +569,11 @@ export default function Home() {
                   Github Contributions
                 </h3>
                 <div className="w-full overflow-hidden rounded-xl bg-white/5 p-4">
-                  <img src="https://ghchart.rshah.org/AF3787/ritik-2407" alt="Ritik's Github Chart" className="w-full h-auto filter invert contrast-125"/>
+                  <img
+                    src="https://ghchart.rshah.org/AF3787/ritik-2407"
+                    alt="Ritik's Github Chart"
+                    className="w-full h-auto filter invert contrast-125"
+                  />
                 </div>
               </div>
             </BentoCard>
@@ -638,14 +665,14 @@ export default function Home() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="group mt-2 flex w-full items-center justify-center gap-2 rounded-2xl bg-white py-3 text-sm font-semibold text-black transition-transform active:scale-95 disabled:opacity-70"
+                className=" cursor-pointer transition-all duration-300 ease-in-out hover:scale-103 group mt-2 flex w-full items-center justify-center gap-2 rounded-2xl bg-white py-3 text-sm font-semibold text-black active:scale-95 disabled:opacity-70"
               >
                 {isSubmitting ? (
                   <Loader2 className="h-4 w-4 animate-spin" />
                 ) : (
                   <>
                     Send Message{" "}
-                    <Send className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                    <Send className="h-4 w-4 transition-transform group-hover:translate-x-0" />
                   </>
                 )}
               </button>
@@ -678,7 +705,7 @@ export default function Home() {
                   <button
                     key={name}
                     onClick={handleClick}
-                    className="group flex h-12 w-12 items-center justify-center rounded-full border border-white/5 bg-white/5 text-zinc-400 transition-all hover:scale-110 hover:bg-white hover:text-black"
+                    className="cursor-pointer group flex h-12 w-12 items-center justify-center rounded-full border border-white/5 bg-white/5 text-zinc-400 transition-all hover:scale-110 hover:bg-white hover:text-black"
                     aria-label={name}
                     type="button"
                   >
@@ -779,5 +806,3 @@ function LeetCodeIcon(props: SVGProps<SVGSVGElement>) {
     </svg>
   );
 }
-
-
