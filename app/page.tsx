@@ -10,6 +10,7 @@ import {
 } from "framer-motion";
 import {
   Star,
+  Github,
   ArrowUpRight,
   ExternalLinkIcon,
   CpuIcon,
@@ -42,6 +43,8 @@ import {
   type SVGProps,
 } from "react";
 
+import GithubChart from "@/components/GitHubContributions";
+
 // --- Types (Kept Exact) ---
 type SectionId = "about" | "projects" | "skills" | "contact";
 
@@ -49,7 +52,7 @@ type Project = {
   name: string;
   description: string;
   tags: string[];
-  status: "Completed" | "Building" | "Planning" | "v-01" | "v-02" | "LIVE";
+  status: "Completed" | "Building" | "Planning" | "v-01" | "v-02" | "v-03";
   link: string;
   post: string;
   live: string;
@@ -119,7 +122,7 @@ const projects: Project[] = [
     description:
       "It is an AI powered analysis engine which scrapes your Github profile to give genuine outputs like suggestions, analysis, roast etc. without sounding too generic and robotic.",
     tags: ["Next", "NextAuth", "Github API", "GROQ LLM"],
-    status: "v-02",
+    status: "v-03",
     link: "https://github.com/ritik-2407/DEV-DNA",
     highlight: "AI powered Github Analyzer",
     post: "https://x.com/ritik_247/status/2003502226493546667?s=20",
@@ -447,8 +450,8 @@ export default function Home() {
                           <div className="flex items-center gap-2 text-xs font-medium tracking-wide text-zinc-500">
                             <span
                               className={`h-1.5 w-1.5 rounded-full ${
-                                project.status === "v-02" ||
-                                project.status === "LIVE"
+                                project.status === "v-03" ||
+                                project.status === "v-02"
                                   ? "bg-green-400"
                                   : "bg-amber-300"
                               }`}
@@ -564,31 +567,32 @@ export default function Home() {
           <div className="grid gap-4 sm:grid-cols-2">
             {/* 1. Github Chart (Full Width: sm:col-span-2) */}
             <BentoCard delay={0.3} className="sm:col-span-2">
-              <div className="flex flex-col gap-4">
-                <h3 className="text-sm font-medium uppercase tracking-wider text-zinc-400">
+              <div className="flex h-full flex-col gap-4">
+                {/* Heading */}
+                <h3 className="flex items-center gap-2 text-sm font-medium uppercase tracking-wider text-zinc-400">
+                  <Github className="h-4 w-4 " />
                   Github Contributions
                 </h3>
-                <div className="w-full overflow-hidden rounded-xl bg-white/5 p-4">
-                  <img
-                    src="https://ghchart.rshah.org/AF3787/ritik-2407"
-                    alt="Ritik's Github Chart"
-                    className="w-full h-auto filter invert contrast-125"
-                  />
+
+                {/* Chart */}
+                <div className="mt-2  flex flex-1 items-center justify-center">
+                  <GithubChart />
                 </div>
               </div>
             </BentoCard>
 
-            {/* 2. LeetCode Stats (Half Width) */}
             <BentoCard delay={0.4}>
               <div className="flex h-full flex-col gap-4">
-                <h3 className="text-sm font-medium uppercase tracking-wider text-zinc-400">
+                {/* Heading */}
+                <h3 className="flex items-center gap-2 text-sm font-medium uppercase tracking-wider text-zinc-400">
                   LeetCode Stats
                 </h3>
-                {/* Removed extra padding/sizing so it fills the card nicely */}
-                <div className="flex flex-1 items-center justify-center overflow-hidden rounded-xl bg-white/0 ">
+
+                {/* Card */}
+                <div className="relative flex flex-1 items-center justify-center overflow-hidden rounded-xl">
                   <img
-                    src="https://leetcard.jacoblin.cool/ritik_247?theme=dark&font=Inter"
-                    alt="Ritik's LeetCode stats"
+                    src="https://leetcard.jacoblin.cool/ritik_247?theme=dark&font=Inter&hide=ranking,username&ext=theme"
+                    alt="LeetCode Stats"
                     className="w-full border-2 border-white/20 rounded-2xl object-contain opacity-90 hover:opacity-100 transition-opacity"
                   />
                 </div>
@@ -601,16 +605,16 @@ export default function Home() {
                 <h3 className="text-sm font-medium uppercase tracking-wider text-zinc-400">
                   TOP Languages
                 </h3>
-                <div className="flex flex-1 items-center justify-center overflow-hidden rounded-xl bg-white/5 p-4">
+                <div className="flex flex-1 items-center justify-center overflow-hidden rounded-xl bg-black/5 ">
                   {/* Try the official GitHub Stats API */}
                   <img
-                    src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=ritik-2407&layout=compact&hide_border=true&title_color=50C878&text_color=a1a1aa&bg_color=ffffff00&langs_count=8"
+                    src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=ritik-2407&layout=compact&hide_border=true&hide_title=true&text_color=a1a1aa&bg_color=121212&langs_count=8"
                     alt="Top Languages"
-                    className="w-full max-w-md object-contain opacity-90 hover:opacity-100 transition-opacity"
+                    className="w-full border-2 border-white/20 rounded-2xl max-w-md object-contain opacity-90 hover:opacity-100 transition-opacity"
                     onError={(e) => {
-                      // Fallback to another instance
+                      // Fallback to another instance with transparent background
                       e.currentTarget.src =
-                        "https://github-readme-stats.vercel.app/api/top-langs/?username=ritik-2407&layout=compact&hide_border=true&title_color=10b981&text_color=a1a1aa";
+                        "https://github-readme-stats.vercel.app/api/top-langs/?username=ritik-2407&layout=compact&hide_border=true&hide_title=true&text_color=a1a1aa&bg_color=00000000";
                     }}
                   />
                 </div>
