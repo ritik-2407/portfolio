@@ -40,19 +40,19 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    /* 1. Added className="dark" to trigger Tailwind dark variants */
+    /* 2. Added colorScheme style to prevent browser white flashes/scrollbars */
+    <html 
+      lang="en" 
+      className="dark" 
+      style={{ colorScheme: 'dark' }} 
+      suppressHydrationWarning
+    >
       <body
-        // FIX APPLIED HERE:
-        // 1. bg-[#050505]: Forces the page background to be black (fixes the "weird" transparency issue).
-        // 2. text-zinc-100: Sets the default text color to light grey/white.
-        // 3. selection:bg-purple-500/30: Adds that nice purple highlight effect you had.
-        className={`${ubuntu.variable} ${lexend.variable} ${outfit.variable} font-body antialiased bg-[#050505] text-zinc-100 selection:bg-purple-500/30`}
+        /* 3. Added bg-[#050505] and text-zinc-100 to the body directly */
+        className={`${ubuntu.variable} ${lexend.variable} ${outfit.variable} font-body antialiased bg-[#050505] text-zinc-100`}
       >
         <Analytics />
-        
-        {/* Note: If your icons/text still flip color in Light Mode, 
-           add the prop forcedTheme="dark" to this ThemeProvider tag.
-        */}
         <ThemeProvider>
           <Starfield />
           <div className="relative flex min-h-screen flex-col">

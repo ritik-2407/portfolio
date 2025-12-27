@@ -38,6 +38,21 @@
   }
 }
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* 2. Set the base colors so even if things take a second to load, it stays black */
+:root {
+  --background: #050505;
+  --foreground: #f4f4f5;
+  color-scheme: dark;
+}
+
+/* 3. Ensure the body is always the correct color */
+body {
+  background-color: #050505;
+  color: #f4f4f5;
+}
+
 * {
   box-sizing: border-box;
 }
