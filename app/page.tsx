@@ -121,7 +121,7 @@ const projects: Project[] = [
     name: "DEV DNA",
     description:
       "It is an AI powered analysis engine which scrapes your Github profile to give genuine outputs like suggestions, analysis, roast etc. without sounding too generic and robotic.",
-    tags: ["Next", "NextAuth", "Github API", "GROQ LLM"],
+    tags: ["NEXT", "NextAuth", "Github API", "Groq LLM"],
     status: "v-03",
     link: "https://github.com/ritik-2407/DEV-DNA",
     highlight: "AI powered Github Analyzer",
@@ -371,25 +371,37 @@ export default function Home() {
                 />
               </div>
 
-              <span className="rounded-full border border-white/5 bg-white/5 px-4 py-1.5 text-xs font-medium text-emerald-300 backdrop-blur-md">
-                Open for Work
+              <span className="inline-flex items-center gap-2 rounded-full border border-white/5 bg-white/5 px-4 py-1.5 text-xs font-medium text-zinc-300 backdrop-blur-md">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                  className="w-3.5 h-3.5"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="m11.54 22.351.07.04.028.016a.76.76 0 0 0 .723 0l.028-.015.071-.041a16.975 16.975 0 0 0 1.144-.742 19.58 19.58 0 0 0 2.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 0 0-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 0 0 2.682 2.282 16.975 16.975 0 0 0 1.145.742ZM12 13.5a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+                 INDIA
               </span>
             </div>
 
-            <h1 className="text-5xl font-semibold tracking-tight sm:text-7xl">
+            <h1 className="cursor-default text-5xl font-semibold tracking-tight sm:text-7xl">
               I&apos;m Ritik.
               <span className="block text-zinc-500">
                 I Just Explore & Build.
               </span>
             </h1>
 
-            <p className="max-w-xl text-lg leading-relaxed text-zinc-400">
+            <p className="cursor-default max-w-xl text-lg leading-relaxed text-zinc-400">
               Full-Stack developer with a focus on{" "}
               <span className="text-zinc-200">Product Design</span> and
               providing seamless <span className="text-zinc-200">UI/UX</span>. I
               build tools that serve a purpose in day to day life. <br></br>{" "}
-              <br></br>Currently a third year CS grad from INDIA stepping into
-              tech and development.
+              <br></br>Currently a third year CS grad stepping into
+              tech and getting started with development.
             </p>
 
             <div className="mt-8 flex gap-4">
@@ -422,10 +434,10 @@ export default function Home() {
         {/* --- PROJECTS --- */}
         <section id="projects" className="flex flex-col gap-12">
           <div>
-            <h2 className="text-3xl font-semibold tracking-tight">
+            <h2 className="cursor-default text-3xl font-semibold tracking-tight">
               Best Works
             </h2>
-            <p className="mt-2 text-zinc-500">
+            <p className="cursor-default mt-2 text-zinc-500">
               Applications that are actually useful.
             </p>
           </div>
@@ -444,16 +456,16 @@ export default function Home() {
                           <Icon className="h-6 w-6 text-zinc-400 transition-colors group-hover:text-zinc-100" />
                         </div>
                         <div>
-                          <h3 className="text-xl font-semibold">
+                          <h3 className="cursor-default text-xl font-semibold">
                             {project.name}
                           </h3>
                           <div className="flex items-center gap-2 text-xs font-medium tracking-wide text-zinc-500">
                             <span
-                              className={`h-1.5 w-1.5 rounded-full ${
+                              className={`h-1.5 w-1.5 rounded-full  ${
                                 project.status === "v-03" ||
                                 project.status === "v-02"
-                                  ? "bg-green-400"
-                                  : "bg-amber-300"
+                                  ? "bg-green-400 cursor-default"
+                                  : "bg-amber-300 cursor-default"
                               }`}
                             />
                             {project.status}
@@ -529,8 +541,8 @@ export default function Home() {
         {/* --- SKILLS --- */}
         <section id="skills" className="flex flex-col gap-12">
           <div>
-            <h2 className="text-3xl font-semibold tracking-tight">Skills</h2>
-            <p className="mt-2 text-zinc-500">
+            <h2 className="cursor-default text-3xl font-semibold tracking-tight">Skills</h2>
+            <p className="cursor-default mt-2 text-zinc-500">
               The technologies I use to build useful apps.
             </p>
           </div>
@@ -545,7 +557,7 @@ export default function Home() {
                 <div className="mb-6 inline-flex h-10 w-10 items-center justify-center rounded-full bg-purple-500/10 text-purple-400">
                   {category.icon}
                 </div>
-                <h3 className="mb-6 text-sm font-medium uppercase tracking-wider text-zinc-400">
+                <h3 className="cursor-default mb-6 text-sm font-medium uppercase tracking-wider text-zinc-400">
                   {category.title}
                 </h3>
                 <div className="flex flex-wrap gap-2 ">
@@ -569,13 +581,13 @@ export default function Home() {
             <BentoCard delay={0.3} className="sm:col-span-2">
               <div className="flex h-full flex-col gap-4">
                 {/* Heading */}
-                <h3 className="flex items-center gap-2 text-sm font-medium uppercase tracking-wider text-zinc-400">
+                <h3 className="cursor-default flex items-center gap-2 text-sm font-medium uppercase tracking-wider text-zinc-400">
                   <Github className="h-4 w-4 " />
                   Github Contributions
                 </h3>
 
                 {/* Chart */}
-                <div className="mt-2  flex flex-1 items-center justify-center">
+                <div className=" cursor-default mt-2  flex flex-1 items-center justify-center">
                   <GithubChart />
                 </div>
               </div>
@@ -584,7 +596,7 @@ export default function Home() {
             <BentoCard delay={0.4}>
               <div className="flex h-full flex-col gap-4">
                 {/* Heading */}
-                <h3 className="flex items-center gap-2 text-sm font-medium uppercase tracking-wider text-zinc-400">
+                <h3 className="cursor-default flex items-center gap-2 text-sm font-medium uppercase tracking-wider text-zinc-400">
                   LeetCode Stats
                 </h3>
 
@@ -602,7 +614,7 @@ export default function Home() {
             {/* 3. Top Languages (Half Width) - Fills the empty spot */}
             <BentoCard delay={0.4}>
               <div className="flex h-full flex-col gap-4">
-                <h3 className="text-sm font-medium uppercase tracking-wider text-zinc-400">
+                <h3 className="cursor-default text-sm font-medium uppercase tracking-wider text-zinc-400">
                   TOP Languages
                 </h3>
                 <div className="flex flex-1 items-center justify-center overflow-hidden rounded-xl bg-black/5 ">
@@ -630,10 +642,10 @@ export default function Home() {
               <HandshakeIcon className="h-6 w-6 text-yellow-200" />
             </div>
 
-            <h2 className="mb-4 text-3xl font-semibold sm:text-4xl">
+            <h2 className="cursor-default mb-4 text-3xl font-semibold sm:text-4xl">
               Let&apos;s build something together.
             </h2>
-            <p className="mb-8 max-w-md text-zinc-400">
+            <p className="cursor-default mb-8 max-w-md text-zinc-400">
               I&apos;m currently open to new projects and opportunities. Drop me
               a line and let's build something cool.
             </p>
