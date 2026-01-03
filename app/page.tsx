@@ -614,8 +614,8 @@ export default function Home() {
             {/* 3. Top Languages (Half Width) - Fills the empty spot */}
             <BentoCard delay={0.4}>
               <div className="flex h-full flex-col gap-4">
-                <h3 className="cursor-default text-sm font-medium uppercase tracking-wider text-zinc-400">
-                  TOP Languages
+                <h3 className="cursor-default text-sm font-medium  tracking-wider text-zinc-400">
+                  TOP GITHUB LANGUAGES
                 </h3>
                 <div className="flex flex-1 items-center justify-center overflow-hidden rounded-xl bg-black/5 ">
                   {/* Try the official GitHub Stats API */}
