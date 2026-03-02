@@ -283,7 +283,7 @@ export default function Home() {
   const [result, setResult] = useState<string | null>(null);
   const [showEmailToast, setShowEmailToast] = useState(false);
   const [activeSection, setActiveSection] = useState<SectionId>("about");
-  const ACCESS_KEY = "1dfdacfa-5d1d-42bd-a831-b7d43243dac2";
+  const ACCESS_KEY = "d71710ed-92c2-41fc-baf9-ae79ca0512d4";
 
   useEffect(() => {
     const observer = new IntersectionObserver(
