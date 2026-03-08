@@ -52,7 +52,7 @@ type Project = {
   name: string;
   description: string;
   tags: string[];
-  status: "Completed" | "Building" | "Planning" | "v-01" | "v-02" | "v-03";
+  status: "Completed" | "Building" | "Planning" | "v-01" | "v-02" | "v-03" | "v-05";
   link: string;
   post: string;
   live: string;
@@ -121,8 +121,8 @@ const projects: Project[] = [
     name: "DEV DNA",
     description:
       "It is an AI powered analysis engine which scrapes your Github profile to give genuine outputs like suggestions, analysis, roast etc. without sounding too generic and robotic.",
-    tags: ["NEXT", "NextAuth", "Github API", "Groq LLM"],
-    status: "v-03",
+    tags: ["NEXT", "GROQ LLM", "Github PAT", "REDIS"],
+    status: "v-05",
     link: "https://github.com/ritik-2407/DEV-DNA",
     highlight: "AI powered Github Analyzer",
     post: "https://x.com/ritik_247/status/2003502226493546667?s=20",
@@ -363,7 +363,7 @@ export default function Home() {
             className="flex flex-col gap-6"
           >
             <div className="flex items-center gap-4">
-              <div className="relative h-24 w-24 overflow-hidden rounded-full border-2 border-white/10 bg-zinc-900 shadow-2xl">
+              <div className="relative h-40 w-40 overflow-hidden rounded-full border-2 border-white/10 bg-zinc-900 shadow-2xl">
                 <img
                   src="/ritik-icon.jpg"
                   alt="Ritik"
@@ -463,6 +463,7 @@ export default function Home() {
                             <span
                               className={`h-1.5 w-1.5 rounded-full  ${
                                 project.status === "v-03" ||
+                                project.status === "v-05" ||
                                 project.status === "v-02"
                                   ? "bg-green-400 cursor-default"
                                   : "bg-amber-300 cursor-default"
