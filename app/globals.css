@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
 :root {
   color-scheme: dark;
@@ -96,3 +97,16 @@ button {
   background: rgba(0, 0, 0, 0.18);
 }
 
+.blog-light-theme {
+  --blog-border: rgba(0,0,0,0.1);
+  --blog-card-bg: rgba(0,0,0,0.02);
+}
+
+.blog-dark-theme {
+  --blog-border: rgba(255,255,255,0.1);
+  --blog-card-bg: rgba(255,255,255,0.02);
+}
+
+.blog-dark-theme .blog-prose-dynamic {
+  @apply prose-invert;
+}

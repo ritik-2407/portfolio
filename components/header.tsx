@@ -6,19 +6,21 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import type { MouseEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { usePathname } from "next/navigation";
 
 const NAV_ITEMS = [
   { label: "About", href: "#about", external: false },
   { label: "Projects", href: "#projects", external: false },
   {
     label: "Blogs",
-    href: "https://medium.com/@ritik_247",
-    external: true,
+    href: "/blogs",
+    external: false,
   },
   { label: "Contact", href: "#contact", external: false },
 ] as const;
 
 export function Header() {
+  const pathname = usePathname();
   const [activeTab, setActiveTab] = useState<string>("");
   const sectionsRef = useRef<Record<string, HTMLElement | null>>({});
 
@@ -97,6 +99,9 @@ export function Header() {
     },
     []
   );
+
+  // Hide the portfolio navbar entirely on the blog section
+  if (pathname.startsWith("/blogs")) return null;
 
   return (
     <motion.header
