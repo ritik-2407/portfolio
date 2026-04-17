@@ -54,7 +54,6 @@ type Project = {
   tags: string[];
   status: "Completed" | "Building" | "Planning" | "v-01" | "v-02" | "v-03" | "v-05";
   link: string;
-  post: string;
   live: string;
   highlight?: string;
 };
@@ -93,7 +92,6 @@ const skills: SkillCategory[] = [
       "NEXT.js",
       "React.js",
       "Express.js",
-      "Postgres SQL",
       "MongoDB",
       "Tailwind CSS",
       "Git & Github",
@@ -103,15 +101,16 @@ const skills: SkillCategory[] = [
     title: "TOOLS & Libraries",
     icon: <WrenchIcon className="h-5 w-5" />,
     skills: [
-      "Recoil & Redux",
-      "Prisma ORM",
-      "Drizzle",
+      "Redis", 
       "Axios",
       "Zod",
       "NextAuth",
       "Lucide React",
       "Framer Motion",
       "BASH",
+      "Postman",
+      "Vercel",
+      "Netlify", "RabbitMQ"
     ],
   },
 ];
@@ -125,7 +124,7 @@ const projects: Project[] = [
     status: "v-05",
     link: "https://github.com/ritik-2407/DEV-DNA",
     highlight: "AI powered Github Analyzer",
-    post: "https://x.com/ritik_247/status/2003502226493546667?s=20",
+    
     live: "https://dev-dna-chi.vercel.app/",
   },
   {
@@ -133,11 +132,10 @@ const projects: Project[] = [
     description:
       "Momentum knows the functioning of your monkey brain and gamifies the experience to keep users hooked into doing productive things and daily tasks like a game.",
     tags: ["NEXT", "MONGO DB", "Lucide React", "Basic Auth"],
-    status: "v-01",
+    status: "v-03",
     link: "https://github.com/ritik-2407/MOMENTUM",
     highlight: "Not your typical productivity partner",
-    post: "https://x.com/ritik_247/status/1995159815526756555?s=20",
-    live: "",
+    live: "https://momentum-ten-mu.vercel.app/",
   },
 ];
 
@@ -400,7 +398,7 @@ export default function Home() {
               <span className="text-zinc-200">Product Design</span> and
               providing seamless <span className="text-zinc-200">UI/UX</span>. I
               build tools that serve a purpose in day to day life. <br></br>{" "}
-              <br></br>Currently a third year CS grad stepping into
+              <br></br>Currently a third year CS student stepping into
               tech and getting started with development.
             </p>
 
@@ -503,18 +501,6 @@ export default function Home() {
                         <GitHubIcon className="h-5 w-5" />
                       </a>
 
-                      {/* 2. X (Twitter) Link */}
-                      {project.post && (
-                        <a
-                          href={project.post}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          aria-label="View Post on X"
-                          className="flex h-12 w-12 items-center justify-center rounded-full bg-zinc-800 text-white transition-transform duration-300 hover:scale-110 focus:scale-110 focus:outline-none focus:ring-2 focus:ring-white/50"
-                        >
-                          <XIcon className="h-5 w-5 fill-current" />
-                        </a>
-                      )}
 
                       {/* 3. NEW: Live Visit Link */}
                       <a
@@ -616,7 +602,7 @@ export default function Home() {
             <BentoCard delay={0.4}>
               <div className="flex h-full flex-col gap-4">
                 <h3 className="cursor-default text-sm font-medium  tracking-wider text-zinc-400">
-                  TOP GITHUB LANGUAGES
+                  TOP LANGUAGES
                 </h3>
                 <div className="flex flex-1 items-center justify-center overflow-hidden rounded-xl bg-black/5 ">
                   {/* Try the official GitHub Stats API */}
