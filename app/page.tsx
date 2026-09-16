@@ -10,7 +10,6 @@ import {
 } from "framer-motion";
 import {
   Star,
-  Github,
   ArrowUpRight,
   ExternalLinkIcon,
   CpuIcon,
@@ -29,9 +28,8 @@ import {
   TrendingUpIcon,
   TwitterIcon,
   User,
-  Wrench,
-  WrenchIcon,
   ShieldCheckIcon,
+  Server,
 } from "lucide-react";
 import { Icon } from "next/dist/lib/metadata/types/metadata-types";
 import {
@@ -43,8 +41,6 @@ import {
   type ReactNode,
   type SVGProps,
 } from "react";
-
-import GithubChart from "@/components/GitHubContributions";
 
 // --- Types (Kept Exact) ---
 type SectionId = "about" | "projects" | "skills" | "contact";
@@ -94,40 +90,33 @@ const skills: SkillCategory[] = [
       "React.js",
       "Express.js",
       "MongoDB",
+      "Redis",
       "Tailwind CSS",
       "Git & Github",
+      "RabbitMQ",
     ],
   },
   {
-    title: "TOOLS & Libraries",
-    icon: <WrenchIcon className="h-5 w-5" />,
+    title: "DevOps & Infrastructure",
+    icon: <Server className="h-5 w-5" />,
     skills: [
-      "Redis", 
-      "Axios",
-      "Zod",
-      "NextAuth",
-      "Lucide React",
-      "Framer Motion",
-      "BASH",
-      "Postman",
-      "Vercel",
-      "Netlify", "RabbitMQ"
+      "Linux",
+      "Shell Scripting",
+      "Docker",
+      "Kubernetes",
+      "CI/CD",
+      "GitHub Actions",
+      "Jenkins",
+      "Ansible",
+      "Terraform",
+      "AWS"
     ],
   },
 ];
 
 const projects: Project[] = [
 
-  {
-    name: "Warranty Vault",
-    description:
-      "A platform for managing and tracking warranties for household products and services.",
-    tags: ["NEXT", "Local Storage", "Tailwind CSS"],
-    status: "v-02",
-    link: "https://github.com/ritik-2407/Warranty-Vault",
-    highlight: "Warranty Management System for household products",
-    live: "https://warranty-vault-fawn.vercel.app/",
-  },
+  
   {
     name: "DEV-DNA",
     description:
@@ -411,8 +400,7 @@ export default function Home() {
               <span className="text-zinc-200">Product Design</span> and
               providing seamless <span className="text-zinc-200">UI/UX</span>. I
               build tools that serve a purpose in day to day life. <br></br>{" "}
-              <br></br>Currently a third year CS student stepping into
-              tech and getting started with development.
+              <br></br>Currently a final year CS student with proficiency in Full Stack Development along with DevOps.
             </p>
 
             <div className="mt-8 flex gap-4">
@@ -574,65 +562,21 @@ export default function Home() {
             ))}
           </div>
 
-          {/* --- REPLACE THE PREVIOUS ACTIVITY STATS DIV WITH THIS --- */}
-          {/* Grid Layout: 2 Columns on medium screens, 1 on mobile */}
-          <div className="grid gap-4 sm:grid-cols-2">
-            {/* 1. Github Chart (Full Width: sm:col-span-2) */}
-            <BentoCard delay={0.3} className="sm:col-span-2">
-              <div className="flex h-full flex-col gap-4">
-                {/* Heading */}
-                <h3 className="cursor-default flex items-center gap-2 text-sm font-medium uppercase tracking-wider text-zinc-400">
-                  <Github className="h-4 w-4 " />
-                  Github Contributions
-                </h3>
-
-                {/* Chart */}
-                <div className=" cursor-default mt-2  flex flex-1 items-center justify-center">
-                  <GithubChart />
-                </div>
+          {/* LeetCode Stats — full width */}
+          <BentoCard delay={0.3}>
+            <div className="flex h-full flex-col gap-4">
+              <h3 className="cursor-default flex items-center gap-2 text-sm font-medium uppercase tracking-wider text-zinc-400">
+                LeetCode Stats
+              </h3>
+              <div className="relative flex flex-1 items-center justify-center overflow-hidden rounded-xl">
+                <img
+                  src="https://leetcard.jacoblin.cool/ritik_247?theme=dark&font=Inter&hide=ranking&ext=theme"
+                  alt="LeetCode Stats"
+                  className="w-full border-2 border-white/20 rounded-2xl object-contain opacity-90 hover:opacity-100 transition-opacity"
+                />
               </div>
-            </BentoCard>
-
-            <BentoCard delay={0.4}>
-              <div className="flex h-full flex-col gap-4">
-                {/* Heading */}
-                <h3 className="cursor-default flex items-center gap-2 text-sm font-medium uppercase tracking-wider text-zinc-400">
-                  LeetCode Stats
-                </h3>
-
-                {/* Card */}
-                <div className="relative flex flex-1 items-center justify-center overflow-hidden rounded-xl">
-                  <img
-                    src="https://leetcard.jacoblin.cool/ritik_247?theme=dark&font=Inter&hide=ranking,username&ext=theme"
-                    alt="LeetCode Stats"
-                    className="w-full border-2 border-white/20 rounded-2xl object-contain opacity-90 hover:opacity-100 transition-opacity"
-                  />
-                </div>
-              </div>
-            </BentoCard>
-
-            {/* 3. Top Languages (Half Width) - Fills the empty spot */}
-            <BentoCard delay={0.4}>
-              <div className="flex h-full flex-col gap-4">
-                <h3 className="cursor-default text-sm font-medium  tracking-wider text-zinc-400">
-                  TOP LANGUAGES
-                </h3>
-                <div className="flex flex-1 items-center justify-center overflow-hidden rounded-xl bg-black/5 ">
-                  {/* Try the official GitHub Stats API */}
-                  <img
-                    src="https://github-readme-stats-sigma-five.vercel.app/api/top-langs/?username=ritik-2407&layout=compact&hide_border=true&hide_title=true&text_color=a1a1aa&bg_color=121212&langs_count=8"
-                    alt="Top Languages"
-                    className="w-full border-2 border-white/20 rounded-2xl max-w-md object-contain opacity-90 hover:opacity-100 transition-opacity"
-                    onError={(e) => {
-                      // Fallback to another instance with transparent background
-                      e.currentTarget.src =
-                        "https://github-readme-stats.vercel.app/api/top-langs/?username=ritik-2407&layout=compact&hide_border=true&hide_title=true&text_color=a1a1aa&bg_color=00000000";
-                    }}
-                  />
-                </div>
-              </div>
-            </BentoCard>
-          </div>
+            </div>
+          </BentoCard>
         </section>
 
         {/* --- CONTACT --- */}
