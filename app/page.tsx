@@ -42,6 +42,8 @@ import {
   type SVGProps,
 } from "react";
 
+import GitHubContributions from "@/components/GitHubContributions";
+
 // --- Types (Kept Exact) ---
 type SectionId = "about" | "projects" | "skills" | "contact";
 
@@ -70,30 +72,39 @@ type SocialLink = {
 // --- Data (Kept Exact) ---
 const skills: SkillCategory[] = [
   {
-    title: "Languages & Runtime",
+    title: "Languages",
     icon: <Code2 className="h-5 w-5" />,
+    skills: ["TypeScript", "JavaScript (ES6+)", "Java", "C++", "SQL"],
+  },
+  {
+    title: "Frontend",
+    icon: <Layers className="h-5 w-5" />,
+    skills: ["React.js", "Next.js", "Tailwind CSS", "Responsive UI/UX", "dnd-kit"],
+  },
+  {
+    title: "Backend & Databases",
+    icon: <Database className="h-5 w-5" />,
     skills: [
-      "JavaScript",
-      "TypeScript",
       "Node.js",
-      "SQL",
-      "C/C++",
-      "Java (OOPS)",
-      "Python (Basic)",
+      "Express.js",
+      "REST APIs",
+      "PostgreSQL",
+      "MongoDB",
+      "Prisma",
+      "Redis",
+      "NextAuth",
+      "JWT & OAuth 2.0",
+      "Zod",
     ],
   },
   {
-    title: "TechStacks",
-    icon: <Layers className="h-5 w-5" />,
+    title: "AI & Integrations",
+    icon: <CpuIcon className="h-5 w-5" />,
     skills: [
-      "NEXT.js",
-      "React.js",
-      "Express.js",
-      "MongoDB",
-      "Redis",
-      "Tailwind CSS",
-      "Git & Github",
-      "RabbitMQ",
+      "LLM APIs (OpenAI/Groq)",
+      "Generative AI",
+      "Fault-Tolerant Pipelines",
+      "Redis Caching",
     ],
   },
   {
@@ -109,12 +120,37 @@ const skills: SkillCategory[] = [
       "Jenkins",
       "Ansible",
       "Terraform",
-      "AWS"
+      "AWS",
+    ],
+  },
+  {
+    title: "Core CS & Tools",
+    icon: <Terminal className="h-5 w-5" />,
+    skills: [
+      "DSA",
+      "OOP",
+      "DBMS",
+      "Operating Systems",
+      "System Design",
+      "Git & GitHub",
+      "Postman",
+      "Vitest",
+      "Vercel",
     ],
   },
 ];
 
 const projects: Project[] = [
+  {
+    name: "TICKSY",
+    description:
+      "A multi-tenant issue tracker (Jira-lite) with a drag-and-drop Kanban board, optimistic updates, role-based access and email-bound invites. Every request is guarded and every query is workspace-scoped so one team's data never leaks to another.",
+    tags: ["NEXT", "TYPESCRIPT", "PRISMA", "POSTGRESQL", "NEXTAUTH", "VITEST"],
+    status: "v-01",
+    link: "https://github.com/ritik-2407/Ticksy",
+    highlight: "Multi-tenant issue tracker",
+    live: "https://ticksy-lake.vercel.app/",
+  },
 
   
   {
@@ -142,7 +178,8 @@ const projects: Project[] = [
 
 const iconMap = {
   "Warranty Vault": ShieldCheckIcon, // If project name is 'Warranty Vault', use ShieldCheck icon
-  "DEV DNA": DnaIcon, // If project name is 'Dev DNA', use Dna icon
+  "DEV-DNA": DnaIcon, // If project name is 'Dev DNA', use Dna icon
+  TICKSY: LayoutGrid,
   MOMENTUM: TrendingUpIcon, // If project name is 'Momentum', use TrendingUp icon
   // Example
 } as const;
@@ -461,6 +498,7 @@ export default function Home() {
                           <div className="flex items-center gap-2 text-xs font-medium tracking-wide text-zinc-500">
                             <span
                               className={`h-1.5 w-1.5 rounded-full  ${
+                                project.status === "v-01" ||
                                 project.status === "v-03" ||
                                 project.status === "v-05" ||
                                 project.status === "v-02"
@@ -561,6 +599,11 @@ export default function Home() {
               </BentoCard>
             ))}
           </div>
+
+          {/* GitHub Activity — full width */}
+          <BentoCard delay={0.2}>
+            <GitHubContributions />
+          </BentoCard>
 
           {/* LeetCode Stats — full width */}
           <BentoCard delay={0.3}>
